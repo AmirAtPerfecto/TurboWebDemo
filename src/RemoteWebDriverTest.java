@@ -28,7 +28,8 @@ public class RemoteWebDriverTest {
 
     public static void main(String[] args) throws MalformedURLException, IOException {
         System.out.println("Run started");
-
+        boolean fast = true;
+        RemoteWebDriver driver = null;
         String browserName = "mobileOS";
         DesiredCapabilities capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
         String host = System.getenv().get("PERFECTO_CLOUD");
@@ -56,9 +57,10 @@ public class RemoteWebDriverTest {
 
         // Name your script
         // capabilities.setCapability("scriptName", "RemoteWebDriverTest");
-
-        RemoteWebDriver driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub"), capabilities);
-//        RemoteWebDriver driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub/fast"), capabilities);
+        if (fast)
+        	driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub/fast"), capabilities);
+        else
+        	driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
         // Reporting client. For more details, see https://github.com/perfectocode/samples/wiki/reporting
