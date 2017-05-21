@@ -30,6 +30,9 @@ public class RemoteWebDriverTest {
         System.out.println("Run started");
         boolean fast = true;
         RemoteWebDriver driver = null;
+        long startBrowser = 0,
+        		scriptExecution = 0,
+        		tempTimer = 0;
         String browserName = "mobileOS";
         DesiredCapabilities capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
         String host = System.getenv().get("PERFECTO_CLOUD");
@@ -57,12 +60,13 @@ public class RemoteWebDriverTest {
 
         // Name your script
         // capabilities.setCapability("scriptName", "RemoteWebDriverTest");
+        tempTimer = System.currentTimeMillis();
         if (fast)
         	driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub/fast"), capabilities);
         else
         	driver = new RemoteWebDriver(new URL("https://" + host + "/nexperience/perfectomobile/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-
+        startBrowser = (System.currentTimeMillis() - tempTimer)/1000;
         // Reporting client. For more details, see https://github.com/perfectocode/samples/wiki/reporting
         PerfectoExecutionContext perfectoExecutionContext = new PerfectoExecutionContext.PerfectoExecutionContextBuilder()
                 .withProject(new Project("My Project", "1.0"))
@@ -77,6 +81,7 @@ public class RemoteWebDriverTest {
 
 // page 1            
             reportiumClient.testStep("step1"); // this is a logical step for reporting
+            tempTimer = System.currentTimeMillis();
             driver.get("https://www.shelterinsurance.com/");
             driver.findElementById("home_usr_zipcode").sendKeys("60606");
             driver.findElement(By.xpath("//A[starts-with(@href, '/CA/quote/request')]")).click();
@@ -123,6 +128,8 @@ public class RemoteWebDriverTest {
 // page 6            
             
             reportiumClient.testStep("step6"); // this is a logical step for reporting            
+            scriptExecution = (System.currentTimeMillis() - tempTimer)/1000;
+
             if (null != driver.findElementById("vehicleBeans0.primaryDriverId")) 
             	reportiumClient.testStop(TestResultFactory.createSuccess());
             else
@@ -136,6 +143,7 @@ public class RemoteWebDriverTest {
                 // Retrieve the URL of the Single Test Report, can be saved to your execution summary and used to download the report at a later point
                 String reportURL = reportiumClient.getReportUrl();
                 System.out.println("report URL: " + reportURL);
+                System.out.println("StartBrowser: " + startBrowser+ " seconds, "+ "Script Execution: "+ scriptExecution+ " seconds");
                 // For documentation on how to export reporting PDF, see https://github.com/perfectocode/samples/wiki/reporting
                 // String reportPdfUrl = (String)(driver.getCapabilities().getCapability("reportPdfUrl"));
 
