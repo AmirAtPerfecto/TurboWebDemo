@@ -6,8 +6,8 @@ Please make sure to define in your environment variables:
 
 PERFECTO_CLOUD (ex.: demo.perfectomobile.com)
 
-PERFECTO_CLOUD_USERNAME
+(PERFECTO_CLOUD_USERNAME)- not needed in 10.3
 
-PERFECTO_CLOUD_PASSWORD
+(PERFECTO_CLOUD_PASSWORD)- not needed in 10.3
 
 PERFECTO_CLOUD_TOKEN (see here how to generate: http://developers.perfectomobile.com/display/PD/Turbo+Web+Automation)
