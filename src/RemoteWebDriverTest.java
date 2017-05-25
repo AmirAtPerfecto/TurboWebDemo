@@ -36,9 +36,9 @@ public class RemoteWebDriverTest {
         String browserName = "mobileOS";
         DesiredCapabilities capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
         String host = System.getenv().get("PERFECTO_CLOUD");
-        capabilities.setCapability("user", System.getenv().get("PERFECTO_CLOUD_USERNAME"));
+//        capabilities.setCapability("user", System.getenv().get("PERFECTO_CLOUD_USERNAME"));
         capabilities.setCapability("offline-token", System.getenv().get("PERFECTO_CLOUD_TOKEN"));
-        capabilities.setCapability("password", System.getenv().get("PERFECTO_CLOUD_PASSWORD"));
+//        capabilities.setCapability("password", System.getenv().get("PERFECTO_CLOUD_PASSWORD"));
 
         //TODO: Change your device ID
         //capabilities.setCapability("deviceName", "12345");
@@ -77,7 +77,7 @@ public class RemoteWebDriverTest {
         ReportiumClient reportiumClient = new ReportiumClientFactory().createPerfectoReportiumClient(perfectoExecutionContext);
 
         try {
-            reportiumClient.testStart("Shelter Insurance", new TestContext("tag2", "tag3"));
+            reportiumClient.testStart("Shelter Insurance", new TestContext("TurboWeb", "tag3"));
 
 // page 1            
             reportiumClient.testStep("step1"); // this is a logical step for reporting
